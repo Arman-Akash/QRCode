@@ -9,7 +9,23 @@
         <div class="row p-1">
             <div class="col-1">User</div>
             <div class="col-5"><input type="text" name="QRCodeText" /></div>
+            @*<input type="file" capture="environment" accept="image/*" id="takePictureField">*@
         </div>
     </form>
-        <div><img width="200" src="@ViewData["QrCodeUri"]" /></div>
+    <div><img width="200" src="@ViewData["QrCodeUri"]" /></div>
+
+    <div id="qr-reader" style="width: 600px"></div>
+    <div id="output"></div>
 </div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        console.log(`Code scanned = ${decodedText}`, decodedResult);
+        document.getElementById("output").innerHTML = `Code scanned = ${decodedText}`;
+    }
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "qr-reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
+</script>
